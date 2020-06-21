@@ -229,8 +229,9 @@ def scrape_snowpack_data(startdate, enddate, dynamodb ):
         print(date(int(date_[2]), months[date_[0]], int(date_[1])))
         insert_data(extract_snowpack_data(url),str(date_), dynamodb)
 
+endpoint_url = 'http://dynamodb:8000'
 
-dynamo = boto3.resource('dynamodb', endpoint_url="http://localhost:8000")
+dynamo = boto3.resource('dynamodb', endpoint_url=endpoint_url)
 try:
     delete_snotel_table("Snotel", dynamo)
     delete_snotel_table("BasinLocations", dynamo)
@@ -240,7 +241,7 @@ except Exception as e:
 create_snotel_table(dynamo)
 create_locations_table(dynamo)
 
-dynamo = boto3.client('dynamodb', endpoint_url='http://localhost:8000')
+dynamo = boto3.client('dynamodb', endpoint_url = endpoint_url)
 start_date = date(2015, 1, 1)
 end_date = date(2016, 1, 1)
 
